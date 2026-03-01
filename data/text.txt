@@ -1,0 +1,4 @@
+"I'm taking a flight from Lagos to Nairobi for a conference. "
+"I would like to know the total flight time back and forth, "
+"and the total cost of logistics for this conference"
+"if I'm staying for three days.
