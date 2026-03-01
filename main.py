@@ -44,7 +44,6 @@ class FlightScheduleInput(BaseModel):
     origin: str = Field(..., description="Departure city name")
     destination: str = Field(..., description="Arrival city name")
 
-# Tools
 class HotelScheduleInput(BaseModel):
     city: str = Field(..., description="City name")
 
@@ -102,6 +101,7 @@ def convert_currency(amount: float, from_currency: str, to_currency: str) -> Dic
         "currency": to_currency.upper(),
     }
 
+# Hybrid RAG System
 class HybridRAGSystem:
 
     def __init__(self):
@@ -170,9 +170,7 @@ class HybridRAGSystem:
         doc = Document(page_content=conversation_text)
         self.vector_store.add_documents([doc])
 
-
 # Build Agent
-
 def build_agent():
 
     rag_system = HybridRAGSystem()
