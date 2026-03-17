@@ -212,3 +212,52 @@ def build_agent():
     )
 
     return agent, rag_system
+
+def main():
+
+    if len(sys.argv) < 2:
+        print("Usage: python main.py \"Your prompt here\"")
+        sys.exit(1)
+
+    user_prompt = sys.argv[1]
+
+    agent, rag_system = build_agent()
+
+    conversation_history: List[Dict[str, str]] = []
+
+    # Save user message
+    conversation_history.append({
+        "role": "user",
+        "content": user_prompt
+    })
+
+    # Invoke agent
+    response = agent.invoke({
+        "messages": conversation_history
+    })
+
+    # Extract assistant response
+    assistant_reply = response["messages"][-1].content
+
+    conversation_history.append({
+        "role": "assistant",
+        "content": assistant_reply
+    })
+
+    # Save conversation to vector store
+    conversation_text = f"User: {user_prompt}\nAssistant: {assistant_reply}"
+    rag_system.add_conversation_to_store(conversation_text)
+
+    # Print conversation history
+    print("\n===== Conversation History =====\n")
+
+    for msg in conversation_history:
+        role = msg["role"].capitalize()
+        print(f"{role}: {msg['content']}\n")
+
+    print("===== Final Response =====\n")
+    print(assistant_reply)
+
+
+if __name__ == "__main__":
+    main()
